@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:1521/ORCLPDB1
+    username: pos_app
+    password: Oracle123
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.OracleDialect
+    show_sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: 8080

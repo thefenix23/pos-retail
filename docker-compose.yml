@@ -1,0 +1,16 @@
+services:
+  oracle:
+    image: oracle/database:19.3.0-ee
+    container_name: pos_oracle
+    restart: unless-stopped
+    environment:
+      ORACLE_SID: ORCLCDB
+      ORACLE_PDB: ORCLPDB1
+      ORACLE_PWD: Oracle123
+    ports:
+      - "1521:1521"
+    volumes:
+      - pos_oradata:/opt/oracle/oradata
+
+volumes:
+  pos_oradata:
