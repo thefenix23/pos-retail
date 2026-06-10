@@ -1,22 +1,12 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { ProductSearch } from './features/sale/components/product-search/product-search';
+import { CaptureInput } from './features/sale/components/capture-input/capture-input';
 import { RouterOutlet } from '@angular/router';
-import { Ping, PingService } from './services/ping';
 
 @Component({
   selector: 'app-root',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class App implements OnInit {
-  private pingService = inject(PingService);
-  pings = signal<Ping[]>([]);
-  error = signal<string>('');
-
-  ngOnInit(): void {
-    this.pingService.getPings().subscribe({
-      next: (data) => this.pings.set(data),
-      error: (err) => this.error.set('No se pudo conectar al backend: ' + err.message),
-    });
-  }
-}
+export class App {}

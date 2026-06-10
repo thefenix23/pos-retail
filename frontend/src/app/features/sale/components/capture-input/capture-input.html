@@ -1,0 +1,54 @@
+<section class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+  <label class="flex items-center gap-2 text-sm font-medium text-slate-500 mb-3">
+    Captura el código del articulo
+  </label>
+
+  <!-- relative: este contenedor es el ancla para la lista flotante -->
+  <div class="relative">
+    <input
+      #captureField
+      type="text"
+      [ngModel]="code()"
+      (ngModelChange)="onInput($event)"
+      (keyup.enter)="onEnter()"
+      (keydown.arrowDown)="$event.preventDefault(); onArrowDown()"
+      (keydown.arrowUp)="$event.preventDefault(); onArrowUp()"
+      placeholder="Escanea, escribe SKU o nombre y presiona Enter"
+      class="w-full text-base bg-slate-50 border border-slate-200 rounded-xl pl-12 pr-4 py-3 transition focus:outline-none focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-50 placeholder:text-slate-400"
+      autocomplete="off"
+    />
+
+    @if (message()) {
+      <p class="text-sm text-red-500 mt-3 flex items-center gap-1.5">
+        <span>⚠</span>
+        {{ message() }}
+      </p>
+    }
+
+    <!-- absolute: la lista flota sobre el contenido, no lo empuja -->
+    @if (results().length > 0) {
+      <ul class="absolute left-0 right-0 top-full mt-2 z-50 bg-slate-50 rounded-xl shadow-lg border border-slate-100 py-1 max-h-72 overflow-y-auto">
+        @for (product of results(); track product.id; let i = $index) {
+          <li
+            (click)="selectResult(product)"
+            [class.bg-blue-50]="i === selectedIndex()"
+            class="flex justify-between items-center px-4 py-2.5 rounded-xl cursor-pointer transition hover:bg-slate-50"
+          >
+            <div>
+              <p class="font-medium text-slate-800 text-sm">{{ product.name }}</p>
+              <p class="text-xs text-slate-400 mt-0.5">
+                {{ product.sku }} &middot; ${{ product.price }} &middot; Stock: {{ product.stock }}
+              </p>
+            </div>
+
+            @if (i === selectedIndex()) {
+              <span class="text-xs text-blue-600 font-medium bg-white px-2 py-1 rounded-lg border border-blue-200">
+                Enter ↵
+              </span>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</section>
