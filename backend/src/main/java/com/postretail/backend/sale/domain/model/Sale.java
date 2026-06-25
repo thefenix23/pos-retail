@@ -1,6 +1,7 @@
 package com.postretail.backend.sale.domain.model;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Sale {
@@ -10,14 +11,21 @@ public class Sale {
     private final Long paymentMethodId;
     private final BigDecimal total;
     private final String status;
+    private final LocalDateTime createdAt;
 
+    // Constructor para crear una venta nueva (sin id ni fecha aún)
     public Sale(Long id, List<SaleItem> items, Long paymentMethodId) {
+        this(id, items, paymentMethodId, null);
+    }
+
+    // Constructor completo
+    public Sale(Long id, List<SaleItem> items, Long paymentMethodId, LocalDateTime createdAt) {
         if (items == null || items.isEmpty()) {
-            throw new IllegalArgumentException("A sale must have at least one item");
+            throw new IllegalArgumentException("Una venta debe tener al menos un articulo");
         }
 
         if (paymentMethodId == null) {
-            throw new IllegalArgumentException("Payment method is required");
+            throw new IllegalArgumentException("Se requiere un método de pago");
         }
 
         this.id = id;
@@ -28,6 +36,7 @@ public class Sale {
                 .map(SaleItem::getSubtotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         this.status = "COMPLETED";
+        this.createdAt = createdAt;
     }
 
     public Long getId() {
@@ -48,5 +57,9 @@ public class Sale {
 
     public String getStatus() {
         return status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 }

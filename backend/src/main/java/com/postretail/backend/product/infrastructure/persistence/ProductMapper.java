@@ -11,6 +11,7 @@ public class ProductMapper {
                 entity.getId(),
                 entity.getSku(),
                 entity.getName(),
+                entity.getDescription(),
                 entity.getPrice(),
                 entity.getStock(),
                 entity.isActive(),
@@ -24,6 +25,7 @@ public class ProductMapper {
         entity.setId(product.getId());
         entity.setSku(product.getSku());
         entity.setName(product.getName());
+        entity.setDescription(product.getDescription());
         entity.setPrice(product.getPrice());
         entity.setStock(product.getStock());
         entity.setActive(product.isActive());

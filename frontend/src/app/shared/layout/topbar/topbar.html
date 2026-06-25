@@ -1,0 +1,30 @@
+<header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6">
+  <!-- Buscador -->
+  <div class="flex-1 max-w-md">
+    <div class="relative">
+      <span
+        class="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+        style="font-size: 1.2rem;"
+      >
+        search
+      </span>
+
+      <input
+        type="text"
+        [ngModel]="search()"
+        (ngModelChange)="search.set($event)"
+        placeholder="Buscar productos..."
+        class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white"
+      >
+    </div>
+  </div>
+
+  <!-- Estado de sincronización -->
+  <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-50 border border-slate-200">
+    <span class="w-2 h-2 rounded-full bg-green-500"></span>
+    <div class="text-right leading-tight">
+      <p class="text-xs font-medium text-slate-700">En línea</p>
+      <p class="text-[11px] text-slate-400">{{ lastSync() }}</p>
+    </div>
+  </div>
+</header>

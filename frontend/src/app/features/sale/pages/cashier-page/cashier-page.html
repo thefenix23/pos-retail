@@ -13,6 +13,13 @@
         <span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>Online
       </span>
       <span>Le atiende: <span class="font-medium">------</span></span>
+      <button
+        routerLink="/"
+        class="p-2 rounded-md hover:bg-blue-600 transition-colors cursor-pointer"
+        aria-label="Ir a dashboard"
+      >
+        <span class="material-symbols-rounded">menu</span>
+      </button>
     </div>
   </header>
 
@@ -26,8 +33,15 @@
       </div>
 
       <!-- Columna derecha: resumen y cobro -->
-      <app-sale-summary></app-sale-summary>
+      <app-sale-summary
+        (checkoutRequested)="openModal()"
+      ></app-sale-summary>
     </div>
   </main>
 
+  <app-payment-modal
+    [open]="modalOpen()"
+    (closed)="closeModal()"
+    (completed)="onSaleCompleted($event)"
+  ></app-payment-modal>
 </div>

@@ -24,11 +24,12 @@
     }
 
     <button
-      (click)="checkout()"
+      (click)="requestCheckout()"
+      [aria-disabled]="cart.items().length === 0"
       [disabled]="processing() || cart.items().length === 0"
       class="w-full bg-green-600 text-white rounded-xl py-2 font-semibold text-lg hover:bg-green-700 disabled:bg-slate-300 disabled:cursor-not-allowed"
     >
-      {{ processing() ? 'Procesando...' : 'Cobrar' }}
+      Cobrar
     </button>
   </div>
 </aside>

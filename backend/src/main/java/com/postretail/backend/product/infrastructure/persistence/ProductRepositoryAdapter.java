@@ -31,4 +31,43 @@ public class ProductRepositoryAdapter implements ProductRepository {
                 .findBySkuAndActiveTrue(sku)
                 .map(ProductMapper::toDomain);
     }
+
+    @Override
+    public List<Product> findAll() {
+        return jpaRepository
+                .findAllByOrderByNameAsc()
+                .stream()
+                .map(ProductMapper::toDomain)
+                .toList();
+    }
+
+    @Override
+    public Optional<Product> findById(Long id) {
+        return jpaRepository
+                .findById(id)
+                .map(ProductMapper::toDomain);
+    }
+
+    @Override
+    public Product save(Product product) {
+        ProductJpaEntity saved = jpaRepository.save(ProductMapper.toJpaEntity(product));
+
+        return ProductMapper.toDomain(saved);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        jpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsBySku(String sku) {
+        return jpaRepository.existsBySku(sku);
+    }
+
+    @Override
+    public boolean existsBySkuAndIdNot(String sku, Long id) {
+        return jpaRepository
+                .existsBySkuAndIdNot(sku, id);
+    }
 }

@@ -19,6 +19,9 @@ public class ProductJpaEntity {
     @Column(nullable = false, length = 150)
     private String name;
 
+    @Column(length = 255)
+    private String description;
+
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal price;
 
@@ -38,6 +41,18 @@ public class ProductJpaEntity {
     private LocalDateTime updatedAt;
 
     public ProductJpaEntity() {}
+
+    // Timestamps automáticos
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     public Long getId() {
         return id;
@@ -61,6 +76,14 @@ public class ProductJpaEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public BigDecimal getPrice() {

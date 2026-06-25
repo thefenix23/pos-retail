@@ -25,7 +25,7 @@ public class SaleJpaEntity {
     private Long paymentMethodId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime cratedAt;
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SaleItemJpaEntity> items = new ArrayList<>();
@@ -34,8 +34,8 @@ public class SaleJpaEntity {
 
     @PrePersist
     public void prePersist() {
-        if (cratedAt == null) {
-            cratedAt = LocalDateTime.now();
+        if (createdAt == null) {
+            createdAt = LocalDateTime.now();
         }
     }
 
@@ -77,11 +77,11 @@ public class SaleJpaEntity {
     }
 
     public LocalDateTime getCratedAt() {
-        return cratedAt;
+        return createdAt;
     }
 
     public void setCratedAt(LocalDateTime cratedAt) {
-        this.cratedAt = cratedAt;
+        this.createdAt = cratedAt;
     }
 
     public List<SaleItemJpaEntity> getItems() {

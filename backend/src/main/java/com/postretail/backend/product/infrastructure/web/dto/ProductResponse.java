@@ -8,8 +8,10 @@ public record ProductResponse (
         Long id,
         String sku,
         String name,
+        String description,
         BigDecimal price,
         int stock,
+        boolean active,
         Long categoryId
 ) {
     public static ProductResponse fromDomain(Product product) {
@@ -17,8 +19,10 @@ public record ProductResponse (
                 product.getId(),
                 product.getSku(),
                 product.getName(),
+                product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
+                product.isActive(),
                 product.getCategoryId()
         );
     }

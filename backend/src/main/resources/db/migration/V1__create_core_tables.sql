@@ -17,6 +17,7 @@ CREATE TABLE products (
     id          NUMBER(19)    GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     sku         VARCHAR2(50)  NOT NULL UNIQUE,
     name        VARCHAR2(150) NOT NULL,
+    description VARCHAR2(255),
     price       NUMBER(12,2)  NOT NULL CHECK (price >= 0),
     stock       NUMBER(10)    DEFAULT 0 NOT NULL CHECK (stock >= 0),
     active      NUMBER(1)     DEFAULT 1 NOT NULL CHECK (active IN (0,1)),

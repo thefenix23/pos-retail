@@ -20,4 +20,9 @@ public interface ProductJpaRepository extends JpaRepository<ProductJpaEntity, Lo
     List<ProductJpaEntity> searchByNameOrSku(@Param("query") String query);
 
     Optional<ProductJpaEntity> findBySkuAndActiveTrue(String sku);
+
+    // Para el CRUD
+    boolean existsBySku(String sku);
+    boolean existsBySkuAndIdNot(String sku, Long id);
+    List<ProductJpaEntity> findAllByOrderByNameAsc();
 }

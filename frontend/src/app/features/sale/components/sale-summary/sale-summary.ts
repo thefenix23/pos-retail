@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, output, signal } from '@angular/core';
 import { CartService } from '../../service/cart';
 import { SaleService } from '../../service/sale';
 import { CreateSaleRequest, SaleResponse } from '../../models/sale.model';
@@ -14,6 +14,9 @@ import { DecimalPipe } from '@angular/common';
 export class SaleSummary {
   protected cart = inject(CartService);
   private saleService = inject(SaleService);
+
+  // Avisa al padre que se requiere cobrar (para abrir el modal)
+  readonly checkoutRequested = output<void>();
 
   paymentMethodId = signal(1);
   processing = signal(false);
@@ -65,5 +68,9 @@ export class SaleSummary {
   articulosLabel(): string {
     const count = this.cart.itemCount();
     return count == 1 ? '1 artículo' : `${count} artículos`;
+  }
+
+  requestCheckout(): void {
+    this.checkoutRequested.emit();
   }
 }

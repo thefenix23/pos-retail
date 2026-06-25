@@ -40,7 +40,8 @@ public class SaleMapper {
         return new Sale(
                 entity.getId(),
                 items,
-                entity.getPaymentMethodId()
+                entity.getPaymentMethodId(),
+                entity.getCratedAt()
         );
     }
 }

@@ -1,0 +1,50 @@
+<div class="p-6">
+  <!-- Encabezado -->
+  <div class="mb-6">
+    <h1 class="text-xl font-semibold text-slate-800">Panel principal</h1>
+    <p class="text-sm text-slate-500 mt-0.5">Resumen y accesos rápidos de tu negocio</p>
+  </div>
+
+  <!-- Acceso rápidos -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl">
+    <!-- Nueva venta: lleva el cashier a pantalla completa -->
+    <a
+      routerLink="/pos"
+      class="group flex items-center gap-4 p-5 bg-white rounded-2xl border border-slate-200 hover:border-b-blue-300 hover:shadow-sm transition"
+    >
+      <span class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600">
+        <span
+          class="material-symbols-rounded"
+          style="font-size: 1.6rem;"
+        >
+          point_of_sale
+        </span>
+      </span>
+
+      <div>
+        <p class="font-semibold text-slate-800">Nueva venta</p>
+        <p class="text-sm text-slate-500">Abrir la caja y cobrar</p>
+      </div>
+    </a>
+
+    <!-- Productos -->
+    <a
+      routerLink="/products"
+      class="group flex items-center gap-4 p-5 bg-white rounded-2xl border border-slate-200 hover:bg-blue-300 hover:shadow-sm transition"
+    >
+      <span class="flex items-center justify-center w-12 h-12 rounded-xl bg-blue-50 text-blue-600">
+        <span
+          class="material-symbols-rounded"
+          style="font-size: 1.6rem;"
+        >
+          inventory_2
+        </span>
+      </span>
+
+      <div>
+        <p class="font-semibold text-slate-800">Productos</p>
+        <p class="text-sm text-slate-500">Administar el catalogo</p>
+      </div>
+    </a>
+  </div>
+</div>
