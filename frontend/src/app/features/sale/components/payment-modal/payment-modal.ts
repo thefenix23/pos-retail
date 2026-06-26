@@ -1,4 +1,14 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  output,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { CartService } from '../../service/cart';
 import { SaleService } from '../../service/sale';
 import { CreateSaleRequest, SaleResponse } from '../../models/sale.model';
@@ -17,6 +27,8 @@ export class PaymentModal {
   private saleService = inject(SaleService);
   private ticketService = inject(TicketService);
 
+  private cashInput = viewChild<ElementRef<HTMLInputElement>>('cashInput');
+
   readonly open = input<boolean>(false);
   readonly closed = output<void>();
   readonly completed = output<SaleResponse>();
@@ -25,6 +37,18 @@ export class PaymentModal {
   processing = signal(false);
   errorMessage = signal('');
   cashReceived = signal<number | null>(null);
+
+  constructor() {
+    // Cuando el modal está abierto y el método es efectivo, enfoca el input
+    effect(() => {
+      if (this.open() && this.isCash()) {
+        // setTimeout da tick para que el input ya esté en el DOM
+        setTimeout(
+          () => this.cashInput()?.nativeElement.focus(),
+        );
+      }
+    });
+  }
 
   protected readonly paymentMethods = [
     { id: 1, name: 'Efectivo', icon: '💵' },

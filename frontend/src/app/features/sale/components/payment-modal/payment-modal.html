@@ -45,6 +45,7 @@
             <div class="mt-5">
               <label class="text-sm font-medium text-slate-700 block mb-2">Efectivo recibido</label>
               <input
+                #cashInput
                 type="number"
                 [ngModel]="cashReceived()"
                 (ngModelChange)="cashReceived.set($event)"

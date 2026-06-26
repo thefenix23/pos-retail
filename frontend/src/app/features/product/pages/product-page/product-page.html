@@ -10,7 +10,7 @@
       (click)="openCreate()"
       class="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700"
     >
-      <span class="material-symbols-rounded" style="font-size: 1.1rem;">add</span>
+      <span class="material-symbols-outlined" style="font-size: 1.1rem;">add</span>
       Nuevo producto
     </button>
   </div>
@@ -18,7 +18,7 @@
   <!-- Buscador -->
   <div class="mb-4">
     <div class="relative max-w-md">
-      <span class="material-symbols-rounded absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" style="font-size: 1.1rem;">search</span>
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" style="font-size: 1.1rem;">search</span>
       <input
         type="text"
         [ngModel]="query()"
@@ -78,14 +78,14 @@
                     title="Editar"
                     class="flex items-center justify-center w-8 h-8 text-slate-600 border border-slate-200 rounded-lg hover:bg-slate-50"
                   >
-                    <span class="material-symbols-rounded" style="font-size: 1.1rem;">edit</span>
+                    <span class="material-symbols-outlined" style="font-size: 1.1rem;">edit</span>
                   </button>
                   <button
                     (click)="confirmDelete(product)"
                     title="Eliminar"
                     class="flex items-center justify-center w-8 h-8 text-red-600 border border-red-200 rounded-lg hover:bg-red-50"
                   >
-                    <span class="material-symbols-rounded" style="font-size: 1.1rem;">delete</span>
+                    <span class="material-symbols-outlined" style="font-size: 1.1rem;">delete</span>
                   </button>
                 </div>
               </td>
