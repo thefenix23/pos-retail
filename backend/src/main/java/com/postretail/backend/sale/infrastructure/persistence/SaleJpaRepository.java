@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface SaleJpaRepository extends JpaRepository<SaleJpaEntity, Long> {
     // Trae las ventas más recientes primero, cargando los items en la misma consulta
     // (EntityGraph evita el problema N+1 y el LazyInitializationException)
-    @EntityGraph(attributePaths = "items")
+    @EntityGraph(attributePaths = {"items", "payments"})
     List<SaleJpaEntity> findAllByOrderByCreatedAtDesc();
 
-    @EntityGraph(attributePaths = "items")
+    @EntityGraph(attributePaths = {"items", "payments"})
     Optional<SaleJpaEntity> findWithItemsById(Long id);
 }

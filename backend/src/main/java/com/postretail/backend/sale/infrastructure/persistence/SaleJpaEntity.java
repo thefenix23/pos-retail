@@ -1,11 +1,14 @@
 package com.postretail.backend.sale.infrastructure.persistence;
 
+import com.postretail.backend.sale.domain.model.SalePayment;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "sales")
@@ -21,14 +24,20 @@ public class SaleJpaEntity {
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal total;
 
-    @Column(name = "payment_method_id", nullable = false)
-    private Long paymentMethodId;
+    @Column(name = "cash_session_id", nullable = false)
+    private Long cashSessionId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // Set + LinkedHashSet: Hibernate deduplica el producto cartesiano que
+    // se produce al traer dos colecciones en el mismo EntityGraph, conservand
+    // el orden de insercion.
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SaleItemJpaEntity> items = new ArrayList<>();
+    private Set<SaleItemJpaEntity> items = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<SalePaymentJpaEntity> payments = new LinkedHashSet<>();
 
     public SaleJpaEntity() {}
 
@@ -42,6 +51,11 @@ public class SaleJpaEntity {
     public void addItem(SaleItemJpaEntity item) {
         items.add(item);
         item.setSale(this);
+    }
+
+    public void addPayment(SalePaymentJpaEntity payment) {
+        payments.add(payment);
+        payment.setSale(this);
     }
 
     public Long getId() {
@@ -68,27 +82,35 @@ public class SaleJpaEntity {
         this.total = total;
     }
 
-    public Long getPaymentMethodId() {
-        return paymentMethodId;
+    public Long getCashSessionId() {
+        return cashSessionId;
     }
 
-    public void setPaymentMethodId(Long paymentMethodId) {
-        this.paymentMethodId = paymentMethodId;
+    public void setCashSessionId(Long cashSessionId) {
+        this.cashSessionId = cashSessionId;
     }
 
-    public LocalDateTime getCratedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCratedAt(LocalDateTime cratedAt) {
-        this.createdAt = cratedAt;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public List<SaleItemJpaEntity> getItems() {
+    public Set<SaleItemJpaEntity> getItems() {
         return items;
     }
 
-    public void setItems(List<SaleItemJpaEntity> items) {
+    public void setItems(Set<SaleItemJpaEntity> items) {
         this.items = items;
+    }
+
+    public Set<SalePaymentJpaEntity> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<SalePaymentJpaEntity> payments) {
+        this.payments = payments;
     }
 }

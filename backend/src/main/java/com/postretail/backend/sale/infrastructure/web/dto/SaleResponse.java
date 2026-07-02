@@ -9,7 +9,10 @@ public record SaleResponse (
         Long id,
         String status,
         BigDecimal total,
-        Long paymentMethodId,
+        BigDecimal paidAmount,
+        BigDecimal change,
+        Long cashSessionId,
+        List<Payment> payments,
         List<Item> items
 ) {
     public record Item(
@@ -17,6 +20,11 @@ public record SaleResponse (
             int quantity,
             BigDecimal unitPrice,
             BigDecimal subtotal
+    ) {}
+
+    public record Payment(
+            Long paymentMethodId,
+            BigDecimal amount
     ) {}
 
     public static SaleResponse fromDomain(Sale sale) {
@@ -32,11 +40,25 @@ public record SaleResponse (
                         ))
                 .toList();
 
+        List<Payment> payments = sale
+                .getPayments()
+                .stream()
+                .map(
+                        p -> new Payment(
+                                p.getPaymentMethodId(),
+                                p.getAmount()
+                        )
+                )
+                .toList();
+
         return new SaleResponse(
                 sale.getId(),
                 sale.getStatus(),
                 sale.getTotal(),
-                sale.getPaymentMethodId(),
+                sale.getPaidAmount(),
+                sale.getChange(),
+                sale.getCashSessionId(),
+                payments,
                 items
         );
     }

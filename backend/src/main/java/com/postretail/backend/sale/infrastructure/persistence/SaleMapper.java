@@ -2,6 +2,7 @@ package com.postretail.backend.sale.infrastructure.persistence;
 
 import com.postretail.backend.sale.domain.model.Sale;
 import com.postretail.backend.sale.domain.model.SaleItem;
+import com.postretail.backend.sale.domain.model.SalePayment;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class SaleMapper {
         SaleJpaEntity entity = new SaleJpaEntity();
         entity.setStatus(sale.getStatus());
         entity.setTotal(sale.getTotal());
-        entity.setPaymentMethodId(sale.getPaymentMethodId());
+        entity.setCashSessionId(sale.getCashSessionId());
 
         for (SaleItem item : sale.getItems()) {
             SaleItemJpaEntity itemEntity = new SaleItemJpaEntity();
@@ -22,6 +23,13 @@ public class SaleMapper {
             itemEntity.setUnitPrice(item.getUnitPrice());
             itemEntity.setSubtotal(item.getSubtotal());
             entity.addItem(itemEntity); // mantiene la relación sincronizada
+        }
+
+        for (SalePayment payment : sale.getPayments()) {
+            SalePaymentJpaEntity paymentEntity = new SalePaymentJpaEntity();
+            paymentEntity.setPaymentMethodId(payment.getPaymentMethodId());
+            paymentEntity.setAmount(payment.getAmount());
+            entity.addPayment(paymentEntity);
         }
 
         return entity;
@@ -37,11 +45,21 @@ public class SaleMapper {
                         i.getUnitPrice()))
                 .toList();
 
+        List<SalePayment> payments = entity
+                .getPayments()
+                .stream()
+                .map(p -> new SalePayment(
+                        p.getPaymentMethodId(),
+                        p.getAmount()
+                ))
+                .toList();
+
         return new Sale(
                 entity.getId(),
                 items,
-                entity.getPaymentMethodId(),
-                entity.getCratedAt()
+                payments,
+                entity.getCashSessionId(),
+                entity.getCreatedAt()
         );
     }
 }

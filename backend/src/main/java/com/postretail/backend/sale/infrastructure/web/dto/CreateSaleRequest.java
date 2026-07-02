@@ -4,5 +4,5 @@ import java.util.List;
 
 public record CreateSaleRequest (
         List<SaleItemRequest> items,
-        Long paymentMethodId
+        List<PaymentRequest> payments
 ) {}

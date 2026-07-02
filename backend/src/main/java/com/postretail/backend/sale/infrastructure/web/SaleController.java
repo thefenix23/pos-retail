@@ -45,10 +45,22 @@ public class SaleController {
                                                 .CreateSaleCommand
                                                 .SaleLine(
                                                         i.productId(),
-                                                i.quantity())
+                                                        i.quantity()
+                                                )
                                 )
                                 .toList(),
-                request.paymentMethodId()
+                request
+                        .payments()
+                        .stream()
+                        .map(
+                                p -> new CreateSaleUseCase
+                                        .CreateSaleCommand
+                                        .PaymentLine(
+                                                p.paymentMethodId(),
+                                                p.amount()
+                                        )
+                        )
+                        .toList()
         );
 
         Sale sale = createSaleUseCase.createSale(command);

@@ -6,6 +6,7 @@ import com.postretail.backend.sale.application.usecase.ListSalesService;
 import com.postretail.backend.sale.domain.port.in.CreateSaleUseCase;
 import com.postretail.backend.sale.domain.port.in.GetSaleUseCase;
 import com.postretail.backend.sale.domain.port.in.ListSalesUseCase;
+import com.postretail.backend.sale.domain.port.out.CashSessionStatusPort;
 import com.postretail.backend.sale.domain.port.out.LoadProductPort;
 import com.postretail.backend.sale.domain.port.out.SaleRepository;
 import com.postretail.backend.sale.domain.port.out.UpdateStockPort;
@@ -19,12 +20,14 @@ public class SaleConfig {
     public CreateSaleUseCase createSaleUseCase(
             LoadProductPort loadProductPort,
             UpdateStockPort updateStockPort,
-            SaleRepository saleRepository
+            SaleRepository saleRepository,
+            CashSessionStatusPort cashSessionStatusPort
     ) {
         return new CreateSaleService(
                 loadProductPort,
                 updateStockPort,
-                saleRepository
+                saleRepository,
+                cashSessionStatusPort
         );
     }
 

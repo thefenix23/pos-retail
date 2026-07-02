@@ -12,8 +12,11 @@ public record SaleDetailResponse(
         Long id,
         String status,
         BigDecimal total,
-        Long paymentMethodId,
+        BigDecimal paidAmount,
+        BigDecimal change,
+        Long cashSessionId,
         LocalDateTime createdAt,
+        List<Payment> payments,
         List<Item> items
 ) {
     public record Item(
@@ -22,6 +25,11 @@ public record SaleDetailResponse(
             int quantity,
             BigDecimal unitPrice,
             BigDecimal subtotal
+    ) {}
+
+    public record Payment(
+            Long paymentMethodId,
+            BigDecimal amount
     ) {}
 
     // Recibe el mapa de nombres (productId -> nombre) para enriquecer cada linea
@@ -41,12 +49,26 @@ public record SaleDetailResponse(
                 ))
                 .toList();
 
+        List<Payment> payments = sale
+                .getPayments()
+                .stream()
+                .map(
+                        p -> new Payment(
+                                p.getPaymentMethodId(),
+                                p.getAmount()
+                        )
+                )
+                .toList();
+
         return new SaleDetailResponse(
                 sale.getId(),
                 sale.getStatus(),
                 sale.getTotal(),
-                sale.getPaymentMethodId(),
+                sale.getPaidAmount(),
+                sale.getChange(),
+                sale.getCashSessionId(),
                 sale.getCreatedAt(),
+                payments,
                 items
         );
     }

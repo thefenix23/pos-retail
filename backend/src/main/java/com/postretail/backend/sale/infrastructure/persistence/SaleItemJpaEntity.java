@@ -3,6 +3,7 @@ package com.postretail.backend.sale.infrastructure.persistence;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "sale_items")
@@ -76,5 +77,19 @@ public class SaleItemJpaEntity {
 
     public void setSubtotal(BigDecimal subtotal) {
         this.subtotal = subtotal;
+    }
+
+    // equals/hashCode por id para comportarse bien dentro de un Set.
+    // Mientras id es null (antes de persistir) cada instancia es unica.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SaleItemJpaEntity other)) return false;
+        return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

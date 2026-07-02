@@ -1,6 +1,7 @@
 package com.postretail.backend.sale.infrastructure.web.dto;
 
 import com.postretail.backend.sale.domain.model.Sale;
+import com.postretail.backend.sale.domain.model.SaleItem;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -10,23 +11,23 @@ public record SaleSummaryResponse(
         Long id,
         String status,
         BigDecimal total,
-        Long paymentMethodId,
         int itemCount,
+        int paymentCount,
         LocalDateTime createdAt
 ) {
     public static SaleSummaryResponse fromDomain(Sale sale) {
         int count = sale
                 .getItems()
                 .stream()
-                .mapToInt(i -> i.getQuantity())
+                .mapToInt(SaleItem::getQuantity)
                 .sum();
 
         return new SaleSummaryResponse(
                 sale.getId(),
                 sale.getStatus(),
                 sale.getTotal(),
-                sale.getPaymentMethodId(),
                 count,
+                sale.getPayments().size(),
                 sale.getCreatedAt()
         );
     }

@@ -16,3 +16,11 @@ frontend/dist/
 # Logs y temporales
 *.log
 .DS_Store
+
+# Variables de entorno con credenciales - NUNCA SUBIR A Git
+.env
+backend/.env
+*.env
+
+# el .env.example Si se sube(es la plantilla sin valores reales)
+!.env.example
